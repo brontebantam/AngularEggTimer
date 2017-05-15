@@ -15,7 +15,7 @@ app.config(function ($routeProvider) {
 
 app.controller('aboutController', ['$scope', function ($scope) { }]);
 
-app.controller('eggTimerController', ['$scope', function ($scope) {
+app.controller('eggTimerController', ['$scope','$http', function ($scope, $http) {
 
     $scope.eggTypes = [{
         id: 1,
@@ -72,15 +72,16 @@ app.controller('eggTimerController', ['$scope', function ($scope) {
     $scope.eggDisplayClass = 'full-egg';
     $scope.timerStopped = true;
     $scope.timerFinished = false;
-
-    $scope.calculateTime = function () {
-        $scope.recommendedTime = 7;
-    }
+    $scope.eggData = $http.get("eggtimes.json").then(function (response) {
+        return response.data.records;
+    });
 
     $scope.setIsValidForm = function () {
 
-        if ($scope.selectedTexture && $scope.selectedTexture.id > 0)
+        if ($scope.selectedTexture && $scope.selectedTexture.id > 0) {
             $scope.isValidForm = true;
+            $scope.recommendedTime = 1;
+        }
         else
             $scope.isValidForm = false;
     }
@@ -114,6 +115,5 @@ app.controller('eggTimerController', ['$scope', function ($scope) {
     function pad(d) {
         return (d < 10) ? '0' + d.toString() : d.toString();
     }
-
 
 }]);

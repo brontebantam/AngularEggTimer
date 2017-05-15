@@ -1,0 +1,31 @@
+﻿{
+	"eggs": [{
+			"hen": [{
+				"large": [{
+					"time": 5
+				}],
+				"medium": [{
+					"time": 5
+				}]
+			}]
+		},
+		"duck": [{
+			"large": [{
+				"time": 5
+			}],
+			"medium": [{
+				"time": 5
+			}]
+		}]
+	},
+	"goose": [{
+		"large": [{
+			"time": 5
+		}],
+		"medium": [{
+			"time": 5
+		}]
+	}]
+},
+}]
+}
