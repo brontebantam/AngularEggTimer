@@ -15,7 +15,7 @@ app.config(function ($routeProvider) {
 
 app.controller('aboutController', ['$scope', function ($scope) { }]);
 
-app.controller('eggTimerController', ['$scope','$http', function ($scope, $http) {
+app.controller('eggTimerController', ['$scope', '$http', function ($scope, $http) {
 
     $scope.eggTypes = [{
         id: 1,
@@ -72,15 +72,21 @@ app.controller('eggTimerController', ['$scope','$http', function ($scope, $http)
     $scope.eggDisplayClass = 'full-egg';
     $scope.timerStopped = true;
     $scope.timerFinished = false;
-    $scope.eggData = $http.get("eggtimes.json").then(function (response) {
-        return response.data.records;
+    $scope.eggData = [];
+    var timerId = 0;
+
+    $http.get('eggtimes.json').then(function (response) {
+        $scope.eggData = response.data;
     });
 
     $scope.setIsValidForm = function () {
 
         if ($scope.selectedTexture && $scope.selectedTexture.id > 0) {
             $scope.isValidForm = true;
-            $scope.recommendedTime = 1;
+
+            var type = $scope.eggData.eggs[$scope.selectedType.label.toLowerCase()];
+            var size = type[$scope.selectedSize.label.toLowerCase()];
+            $scope.recommendedTime = size[$scope.selectedTexture.id];
         }
         else
             $scope.isValidForm = false;
@@ -92,7 +98,7 @@ app.controller('eggTimerController', ['$scope','$http', function ($scope, $http)
         timerEnd.setMinutes(timerEnd.getMinutes() + parseInt($scope.recommendedTime));
         $scope.timerStopped = false;
 
-        var x = setInterval(function () {
+        timerId = setInterval(function () {
             var now = new Date();
             var nowMinutes = now.getTime();
             var endMinutes = timerEnd.getTime()
@@ -110,6 +116,12 @@ app.controller('eggTimerController', ['$scope','$http', function ($scope, $http)
 
         }, 1000);
 
+    }
+
+    $scope.stopTimer = function () {
+        clearInterval(timerId);
+        $scope.timerStopped = true;
+        $scope.timerFinished = false;
     }
 
     function pad(d) {

@@ -1,11 +1,11 @@
 ﻿<div class="container theme-showcase">
-
+    <h3>Select your perfect egg.</h3>
     <div ng-disabled="timerStopped">
         <div class="egg-type">
-            <ul>
-                <li ng-repeat="eggType in eggTypes">
+            <ul class="list-group">
+                <li ng-repeat="eggType in eggTypes" class="list-group-item">
                     <label for="">
-                        <input type="radio" name="eggType-rdo" ng-value="eggType" ng-model="$parent.selectedType" ng-click="calculateTime()" autocomplete="off">
+                        <input type="radio" name="eggType-rdo" ng-change="setIsValidForm()" ng-value="eggType" ng-model="$parent.selectedType" ng-click="calculateTime()" autocomplete="off">
                         {{eggType.label}}
                     </label>
                 </li>
@@ -15,10 +15,10 @@
         <br />
 
         <div class="egg-size">
-            <ul>
-                <li ng-repeat="eggSize in eggSizes">
+            <ul class="list-group">
+                <li ng-repeat="eggSize in eggSizes" class="list-group-item">
                     <label for="">
-                        <input type="radio" name="eggSize-rdo" ng-value="eggSize" ng-model="$parent.selectedSize" ng-click="calculateTime()" autocomplete="off">
+                        <input type="radio" name="eggSize-rdo" ng-change="setIsValidForm()" ng-value="eggSize" ng-model="$parent.selectedSize" ng-click="calculateTime()" autocomplete="off">
                         {{eggSize.label}}
                     </label>
                 </li>
@@ -27,25 +27,25 @@
 
         <br />
 
-        <div class="egg-texture dropdown theme-dropdown clearfix">
-            <select class="egg-texture" ng-change="setIsValidForm()" ng-model="selectedTexture" ng-value="eggTexture" ng-options="eggTexture.label for eggTexture in eggTextures" required>
+        <div class="egg-texture form-group">
+            <select class="egg-texture form-control" ng-change="setIsValidForm()" ng-model="selectedTexture" ng-value="eggTexture" ng-options="eggTexture.label for eggTexture in eggTextures" required>
                 <option value="">Select Texture</option>
             </select>
         </div>
     </div>
-    <br />
-
-    <div ng-show="isValidForm">
-        For a
-                <br />
-        <h2>{{ selectedSize.label + ' ' +selectedType.label   + ' egg, which is ' + selectedTexture.label }}</h2>
-        <br />
-        The recommended boiling time is:
+    <div ng-show="isValidForm" class="timer-controls">
+        <h3>For a                 
+       {{ selectedSize.label + ' ' +selectedType.label   + ' egg, which is ' + selectedTexture.label }}</h3>
+        <h4>The recommended boiling time is:
                 <div>{{ recommendedTime }} Minutes</div>
-        <input type="button" ng-show="timerStopped" ng-click="startTimer()" value="Start Timer" />
-        <div ng-class="eggDisplayClass">
-            <label ng-hide="timerStopped">{{ timer }}</label>
+        </h4>
+        <input type="button" class="btn-primary" ng-show="timerStopped" ng-click="startTimer()" value="Start Timer" /><input type="button" class="btn-danger" ng-hide="timerStopped" ng-click="stopTimer()" value="Cancel Timer" />
+        <div class="image-wrapper">
+            <div ng-class="eggDisplayClass">
+                <label ng-hide="timerStopped">{{ timer }}</label>
+            </div>
         </div>
-        <label ng-show="timerFinished">Your egg should be ready</label>
+        <h2>
+            <label ng-show="timerFinished">Your egg should be ready</label></h2>
     </div>
 </div>
