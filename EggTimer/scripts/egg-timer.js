@@ -122,6 +122,7 @@ app.controller('eggTimerController', ['$scope', '$http', function ($scope, $http
         clearInterval(timerId);
         $scope.timerStopped = true;
         $scope.timerFinished = false;
+        $scope.timer = 0;
     }
 
     function pad(d) {
