@@ -1,0 +1,51 @@
+﻿<div class="container theme-showcase">
+
+    <div ng-disabled="timerStopped">
+        <div class="egg-type">
+            <ul>
+                <li ng-repeat="eggType in eggTypes">
+                    <label for="">
+                        <input type="radio" name="eggType-rdo" ng-value="eggType" ng-model="$parent.selectedType" ng-click="calculateTime()" autocomplete="off">
+                        {{eggType.label}}
+                    </label>
+                </li>
+            </ul>
+        </div>
+
+        <br />
+
+        <div class="egg-size">
+            <ul>
+                <li ng-repeat="eggSize in eggSizes">
+                    <label for="">
+                        <input type="radio" name="eggSize-rdo" ng-value="eggSize" ng-model="$parent.selectedSize" ng-click="calculateTime()" autocomplete="off">
+                        {{eggSize.label}}
+                    </label>
+                </li>
+            </ul>
+        </div>
+
+        <br />
+
+        <div class="egg-texture dropdown theme-dropdown clearfix">
+            <select class="egg-texture" ng-change="setIsValidForm()" ng-model="selectedTexture" ng-value="eggTexture" ng-options="eggTexture.label for eggTexture in eggTextures" required>
+                <option value="">Select Texture</option>
+            </select>
+        </div>
+    </div>
+    <br />
+
+    <div ng-show="isValidForm">
+        For a
+                <br />
+        <h2>{{ selectedSize.label + ' ' +selectedType.label   + ' egg, which is ' + selectedTexture.label }}</h2>
+        <br />
+        The recommended boiling time is:
+                <div>{{ recommendedTime }} Minutes</div>
+        <input type="button" ng-show="timerStopped" ng-click="startTimer()" value="Start Timer" />
+        <div ng-class="eggDisplayClass">
+            <label ng-hide="timerStopped">{{ timer }}</label>
+        </div>
+        <label ng-show="timerFinished">Your egg should be ready</label>
+    </div>
+</div>
